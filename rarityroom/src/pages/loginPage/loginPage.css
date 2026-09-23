@@ -1,26 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: "DM Sans", sans-serif;
-  background: #08060d;
-  color: #f8f4ff;
-}
-
 button,
 input {
   font-family: inherit;
@@ -1138,5 +1115,117 @@ input {
 
   .mini-card {
     width: 100%;
+  }
+}
+
+.collector-showcase {
+  position: absolute;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  opacity: 0.75;
+}
+
+.collector-showcase::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    #0b0811 0%,
+    transparent 18%,
+    transparent 78%,
+    #0b0811 100%
+  );
+
+  pointer-events: none;
+}
+
+.collector-row {
+  position: absolute;
+
+  width: max-content;
+
+  white-space: nowrap;
+
+  font-size: 58px;
+
+  line-height: 1;
+
+  filter: grayscale(0.25) drop-shadow(0 0 18px rgba(123, 75, 196, 0.2));
+
+  opacity: 0.12;
+
+  user-select: none;
+}
+
+.row-one {
+  top: 15%;
+
+  left: -70%;
+
+  animation: collectorMoveOne 35s linear infinite;
+}
+
+.row-two {
+  top: 42%;
+
+  left: -80%;
+
+  font-size: 48px;
+
+  opacity: 0.075;
+
+  animation: collectorMoveTwo 45s linear infinite;
+}
+
+.row-three {
+  top: 67%;
+
+  left: -65%;
+
+  font-size: 52px;
+
+  opacity: 0.055;
+
+  animation: collectorMoveThree 55s linear infinite;
+}
+
+@keyframes collectorMoveOne {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(65%);
+  }
+}
+
+@keyframes collectorMoveTwo {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(75%);
+  }
+}
+
+@keyframes collectorMoveThree {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(60%);
   }
 }
