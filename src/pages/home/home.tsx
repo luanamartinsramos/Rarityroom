@@ -1,110 +1,262 @@
+import { useNavigate } from "react-router-dom";
+import { products } from "../../data/products";
 import "./home.css";
 
-type Order = {
-  id: string;
-  status: string;
-  date: string;
-  total: number;
-  items: string[];
-};
-
-const orders: Order[] = [
-  {
-    id: "#0004",
-    status: "Em transporte",
-    date: "24/09/2026",
-    total: 379.8,
-    items: ["🧙 Action Figure", "🃏 TCG Collection"],
-  },
-  {
-    id: "#0003",
-    status: "Entregue",
-    date: "18/09/2026",
-    total: 189.9,
-    items: ["⚔️ Espada decorativa"],
-  },
-];
-
 function Home() {
+  const navigate = useNavigate();
+
+  const savedUser = localStorage.getItem("user");
+  const user = savedUser ? JSON.parse(savedUser) : null;
+
+  function handleLogout() {
+    localStorage.removeItem("isLogged");
+    navigate("/login");
+  }
+
   return (
-    <main className="home">
-      <section className="home-header">
-        <span className="home-eyebrow">RARITYROOM</span>
-
-        <h1>
-          Olá, <span>Luana!</span> 👋
-        </h1>
-
-        <p>Acompanhe seus pedidos e sua coleção.</p>
-      </section>
-
-      <section className="order-summary">
-        <div className="summary-card">
-          <small>PEDIDOS</small>
-          <strong>{orders.length}</strong>
+    <main className="home-page">
+      <nav className="home-navbar">
+        <div className="home-logo">
+          <span>✦</span>
+          RARITYROOM
         </div>
 
-        <div className="summary-card">
-          <small>A CAMINHO</small>
-          <strong>
-            {orders.filter((order) => order.status === "Em transporte").length}
-          </strong>
+        <div className="home-search">
+          <span>⌕</span>
+          <input
+            type="text"
+            placeholder="Buscar itens, personagens, coleções..."
+          />
         </div>
 
-        <div className="summary-card">
-          <small>ENTREGUES</small>
-          <strong>
-            {orders.filter((order) => order.status === "Entregue").length}
-          </strong>
-        </div>
-      </section>
+        <div className="home-nav-actions">
+          <button className="nav-button">
+            ♡ <span>Favoritos</span>
+          </button>
 
-      <section className="orders-section">
-        <div className="section-title">
+          <button className="nav-button">
+            🛒 <span>Carrinho</span>
+          </button>
+
+          <button className="profile-button">
+            <span className="profile-avatar">
+              {user?.name?.charAt(0)?.toUpperCase() || "C"}
+            </span>
+
+            <span>{user?.name?.split(" ")[0] || "Colecionador"}</span>
+          </button>
+
+          <button className="logout-button" onClick={handleLogout}>
+            Sair
+          </button>
+        </div>
+      </nav>
+
+      <div className="home-content">
+        <section className="welcome-section">
           <div>
-            <span>MINHA CONTA</span>
-            <h2>Meus pedidos</h2>
+            <span className="home-eyebrow">✦ ÁREA DO COLECIONADOR</span>
+
+            <h1>
+              Olá, <span>{user?.name?.split(" ")[0] || "Colecionador"}</span>.
+            </h1>
+
+            <p>
+              Seu universo geek está esperando por você. Explore novos itens e
+              acompanhe seus pedidos.
+            </p>
+
+            <div className="hero-actions">
+              <button className="primary-button">Explorar coleção →</button>
+
+              <button className="secondary-button">Ver meus pedidos</button>
+            </div>
           </div>
-        </div>
 
-        <div className="orders-list">
-          {orders.map((order) => (
-            <article className="order-card" key={order.id}>
-              <div className="order-top">
-                <div>
-                  <span>Pedido</span>
-                  <h3>{order.id}</h3>
+          <div className="hero-symbol">
+            <div className="symbol-ring ring-one"></div>
+            <div className="symbol-ring ring-two"></div>
+            <span>✦</span>
+          </div>
+        </section>
+
+        <section className="stats-section">
+          <div className="stat-card">
+            <span className="stat-icon">📦</span>
+            <div>
+              <small>TOTAL DE PEDIDOS</small>
+              <strong>4</strong>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-icon">🚚</span>
+            <div>
+              <small>A CAMINHO</small>
+              <strong>1</strong>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-icon">♡</span>
+            <div>
+              <small>FAVORITOS</small>
+              <strong>8</strong>
+            </div>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-icon">✦</span>
+            <div>
+              <small>COLECIONADOR DESDE</small>
+              <strong>2026</strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="featured-order">
+          <div className="section-heading">
+            <div>
+              <span>ACOMPANHE SUA COMPRA</span>
+              <h2>Pedido em andamento</h2>
+            </div>
+
+            <button>Ver todos →</button>
+          </div>
+
+          <div className="order-card">
+            <div className="order-product">
+              <div className="product-image">
+                <img src={products[1]?.image} alt={products[1]?.name} />
+              </div>
+
+              <div>
+                <span className="order-number">PEDIDO #RR-2026-00124</span>
+
+                <h3>{products[1]?.name || "Katana Demon Slayer"}</h3>
+
+                <p>Edição especial • 1 unidade</p>
+              </div>
+            </div>
+
+            <div className="order-price">
+              <small>TOTAL</small>
+              <strong>R$ 349,90</strong>
+            </div>
+
+            <div className="order-status">
+              <span className="status-dot"></span>
+
+              <div>
+                <strong>Em transporte</strong>
+                <small>Previsão: 28 de setembro</small>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-progress">
+            <div className="progress-step active">
+              <span>✓</span>
+              <small>Pedido realizado</small>
+            </div>
+
+            <div className="progress-line active"></div>
+
+            <div className="progress-step active">
+              <span>✓</span>
+              <small>Preparando</small>
+            </div>
+
+            <div className="progress-line active"></div>
+
+            <div className="progress-step active">
+              <span>🚚</span>
+              <small>Em transporte</small>
+            </div>
+
+            <div className="progress-line"></div>
+
+            <div className="progress-step">
+              <span>○</span>
+              <small>Entregue</small>
+            </div>
+          </div>
+        </section>
+
+        <section className="categories-section">
+          <div className="section-heading">
+            <div>
+              <span>EXPLORE</span>
+              <h2>Encontre seu próximo item</h2>
+            </div>
+          </div>
+
+          <div className="categories-grid">
+            <div className="category-card category-purple">
+              <span>🎮</span>
+              <h3>Games</h3>
+              <p>Jogos e acessórios</p>
+            </div>
+
+            <div className="category-card category-gold">
+              <span>🦸</span>
+              <h3>Heróis</h3>
+              <p>Marvel, DC e muito mais</p>
+            </div>
+
+            <div className="category-card category-blue">
+              <span>🧙</span>
+              <h3>Fantasia</h3>
+              <p>Magia e aventuras</p>
+            </div>
+
+            <div className="category-card category-red">
+              <span>👾</span>
+              <h3>Anime</h3>
+              <p>Itens exclusivos</p>
+            </div>
+
+            <div className="category-card category-pink">
+              <span>🧸</span>
+              <h3>Figures</h3>
+              <p>Bonecos e estátuas</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="recommended-section">
+          <div className="section-heading">
+            <div>
+              <span>PARA VOCÊ</span>
+              <h2>Itens que podem entrar na sua coleção</h2>
+            </div>
+
+            <button>Ver todos →</button>
+          </div>
+
+          <div className="products-grid">
+            {products.map((product) => (
+              <article className="product-card" key={product.id}>
+                <div className="product-cover">
+                  <img src={product.image} alt={product.name} />
+
+                  <button className="favorite">♡</button>
                 </div>
 
-                <strong
-                  className={
-                    order.status === "Entregue"
-                      ? "status delivered"
-                      : "status shipping"
-                  }
-                >
-                  {order.status}
-                </strong>
-              </div>
+                <div className="product-info">
+                  <span>{product.category}</span>
 
-              <div className="order-items">
-                {order.items.map((item) => (
-                  <p key={item}>{item}</p>
-                ))}
-              </div>
+                  <h3>{product.name}</h3>
 
-              <div className="order-bottom">
-                <div>
-                  <small>{order.date}</small>
-                  <strong>R$ {order.total.toFixed(2).replace(".", ",")}</strong>
+                  <strong>
+                    R$ {product.price.toFixed(2).replace(".", ",")}
+                  </strong>
                 </div>
-
-                <button>Ver pedido →</button>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
