@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./loginPage.css";
 
 function LoginPage() {
@@ -137,7 +138,8 @@ function LoginPage() {
           </form>
 
           <p className="register">
-            Ainda não é colecionador? <a href="#">Criar minha conta</a>
+            Ainda não é colecionador?{" "}
+            <Link to="/register">Criar minha conta</Link>
           </p>
 
           <div className="security">
