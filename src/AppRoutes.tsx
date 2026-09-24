@@ -1,9 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import LoginPage from "./pages/loginPage/loginPage.tsx";
-import RegisterPage from "./pages/registerPage/registerPage.tsx";
+import LoginPage from "./pages/login/login.tsx";
+import RegisterPage from "./pages/register/register.tsx";
 
-function App() {
+function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
@@ -15,4 +15,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppRoutes;

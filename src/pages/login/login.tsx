@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import "./loginPage.css";
+import "./login.css";
 
-function LoginPage() {
+function Login() {
   return (
     <main className="login-page">
       <div className="background-glow glow-one"></div>
@@ -152,4 +152,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;

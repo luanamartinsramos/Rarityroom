@@ -1,6 +1,6 @@
-import "./RegisterPage.css";
+import "./Register.css";
 
-function RegisterPage() {
+function Register() {
   return (
     <main className="register-page">
       <div className="register-glow register-glow-one"></div>
@@ -137,4 +137,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default Register;
