@@ -1,7 +1,40 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import "./login.css";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setError("");
+
+    // Lógica temporaria enwuanto não conectamos o backend, para simular o login e redirecionar para a página home
+    const savedUser = localStorage.getItem("user");
+
+    if (!savedUser) {
+      setError("Nenhuma conta encontrada. Crie sua conta primeiro.");
+      return;
+    }
+
+    const user = JSON.parse(savedUser);
+
+    if (email !== user.email || password !== user.password) {
+      setError("E-mail ou senha incorretos.");
+      return;
+    }
+
+    localStorage.setItem("isLogged", "true");
+
+    navigate("/home");
+  }
+
   return (
     <main className="login-page">
       <div className="background-glow glow-one"></div>
@@ -85,7 +118,7 @@ function Login() {
             </p>
           </div>
 
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleLogin}>
             <div className="input-group">
               <label htmlFor="email">E-MAIL</label>
 
@@ -97,6 +130,8 @@ function Login() {
                   type="email"
                   placeholder="seu@email.com"
                   autoComplete="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   required
                 />
               </div>
@@ -105,7 +140,6 @@ function Login() {
             <div className="input-group">
               <div className="password-label">
                 <label htmlFor="password">SENHA</label>
-
                 <a href="#">Esqueceu a senha?</a>
               </div>
 
@@ -117,6 +151,8 @@ function Login() {
                   type="password"
                   placeholder="••••••••"
                   autoComplete="current-password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
                   required
                 />
               </div>
@@ -124,15 +160,14 @@ function Login() {
 
             <label className="remember">
               <input type="checkbox" />
-
               <span className="custom-checkbox"></span>
-
               <span>Lembrar de mim</span>
             </label>
 
+            {error && <p className="login-error">{error}</p>}
+
             <button type="submit" className="login-button">
               <span>ENTRAR NA RARITYROOM</span>
-
               <span className="button-arrow">→</span>
             </button>
           </form>
